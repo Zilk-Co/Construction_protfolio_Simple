@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { toast } from "sonner";
 import PageTransition from "@/components/PageTransition";
+import LocationMap from "@/components/LocationMap";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +25,7 @@ export default function Contact() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative py-32 md:py-48 bg-[#050505] overflow-hidden border-b border-white/5">
+      <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden border-b border-white/5">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 blur-[150px] rounded-full mix-blend-screen -translate-y-1/2 -translate-x-1/2" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -51,8 +52,10 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="py-24 relative z-10">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-[url('/src/assets/bg-highway.png')] bg-cover bg-center opacity-30 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/80 to-[#050505]/95" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
             {/* Contact Info */}
@@ -175,6 +178,8 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      <LocationMap />
     </PageTransition>
   );
 }

@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { ArrowRight, ChevronRight, HardHat, Building2, Ruler, ClipboardList, Zap, PaintRoller } from "lucide-react";
+import * as Icons from "lucide-react";
 import PageTransition from "@/components/PageTransition";
+import LocationMap from "@/components/LocationMap";
 import { projects, services } from "@/lib/data";
 
 const FADE_UP = {
@@ -137,7 +139,9 @@ export default function Home() {
       </div>
 
       {/* COMPANY MESSAGE & STATS */}
-      <section className="py-20 bg-[#050505] border-y border-white/5 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden border-y border-white/5">
+        <div className="absolute inset-0 bg-[url('/src/assets/bg-park.png')] bg-cover bg-center opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/80 to-[#050505]/95" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <motion.p 
@@ -160,8 +164,10 @@ export default function Home() {
       </section>
 
       {/* GOAL, MISSION, VISION */}
-      <section className="py-24 md:py-32 relative">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="py-24 md:py-32 relative border-y border-white/5">
+        <div className="absolute inset-0 bg-[url('/src/assets/bg-underpass.png')] bg-cover bg-center opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/80 to-[#050505]/95" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -203,8 +209,10 @@ export default function Home() {
       </section>
 
       {/* SERVICES PREVIEW */}
-      <section className="py-24 md:py-32 bg-[#050505] relative border-y border-white/5">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="py-24 md:py-32 relative border-y border-white/5">
+        <div className="absolute inset-0 bg-[url('/src/assets/bg-aerial.png')] bg-cover bg-center opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/80 to-[#050505]/95" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <motion.div 
               initial="hidden"
@@ -234,21 +242,29 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.slice(0, 3).map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative h-[300px] rounded-2xl overflow-hidden cursor-pointer"
-              >
-                <div className="absolute inset-0 bg-[#111] p-8 flex flex-col justify-end border border-white/5 group-hover:border-primary/30 transition-colors z-10">
-                  <h3 className="text-2xl font-display mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-muted-foreground text-sm line-clamp-2 transition-all duration-300 group-hover:text-foreground/80">{service.description}</p>
-                </div>
-              </motion.div>
-            ))}
+            {services.slice(0, 6).map((service, index) => {
+              const Icon = Icons[service.icon as keyof typeof Icons] as React.ElementType;
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative h-[300px] rounded-2xl overflow-hidden cursor-pointer"
+                >
+                  <Link href={`/services/${service.id}`}>
+                    <div className="absolute inset-0 bg-[#111]/80 backdrop-blur-sm p-8 flex flex-col border border-white/5 group-hover:border-primary/30 transition-colors z-10">
+                      <div className="mb-auto p-3 rounded-xl bg-primary/10 inline-block self-start">
+                        {Icon && <Icon size={28} className="text-primary" />}
+                      </div>
+                      <h3 className="text-2xl font-display mb-2 group-hover:text-primary transition-colors mt-4">{service.title}</h3>
+                      <p className="text-muted-foreground text-sm line-clamp-2 transition-all duration-300 group-hover:text-foreground/80">{service.description}</p>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -340,6 +356,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      <LocationMap />
     </PageTransition>
   );
 }

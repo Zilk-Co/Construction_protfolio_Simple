@@ -22,7 +22,7 @@ export default function Projects() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative py-32 bg-[#050505] border-b border-white/5">
+      <section className="relative py-20 md:py-28 bg-[#050505] border-b border-white/5">
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-3xl">
             <motion.div

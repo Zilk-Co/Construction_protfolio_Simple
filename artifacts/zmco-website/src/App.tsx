@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 
 import SmoothScroll from "@/components/SmoothScroll";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollToTop from "@/components/ScrollToTop";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -45,6 +46,7 @@ function App() {
       <TooltipProvider>
         <SmoothScroll>
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <ScrollToTop />
             <AnimatedBackground />
             <Header />
             <main>

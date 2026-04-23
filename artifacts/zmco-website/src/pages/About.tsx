@@ -6,7 +6,7 @@ export default function About() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative py-32 md:py-48 bg-[#050505] overflow-hidden border-b border-white/5">
+      <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden border-b border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl">
           <div className="absolute inset-0 bg-primary/10 blur-[150px] rounded-full mix-blend-screen" />
         </div>
@@ -88,8 +88,10 @@ export default function About() {
       </section>
 
       {/* Core Values */}
-      <section className="py-24 md:py-32 bg-[#050505] border-y border-white/5">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="py-24 md:py-32 relative border-y border-white/5">
+        <div className="absolute inset-0 bg-[url('/src/assets/bg-canal.png')] bg-cover bg-center opacity-40 mix-blend-luminosity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/95 via-[#050505]/80 to-[#050505]/95" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-display mb-6">Our Core Values</h2>
             <p className="text-muted-foreground">The principles that guide every brick we lay and every design we draft.</p>

@@ -96,14 +96,24 @@ export const projects = [
   },
   {
     id: "p10",
-    title: "ZMC Head Office & Equipment Fleet",
+    title: "Workshop & Equipment",
     location: "Pakistan",
     category: "Company",
     status: "completed",
     year: "2024",
     image: fleet1,
     gallery: [fleet1, fleetExcavators, fleetHowo, fleetYard],
-    description: "Our headquarters and fully-owned heavy-equipment fleet — including HOWO dump trucks and CAT 330D excavators — enabling us to self-perform earthworks, hauling, and site logistics across Pakistan."
+    description: "Our fully-owned heavy-equipment fleet and workshop — including HOWO dump trucks and CAT 330D excavators — enabling us to self-perform earthworks, hauling, and site logistics across Pakistan."
+  },
+  {
+    id: "p11",
+    title: "Sardar Mohammad Ashraf D. Baluch Office",
+    location: "Pakistan",
+    category: "Commercial",
+    status: "completed",
+    year: "2024",
+    image: "/src/assets/projects/p1.png",
+    description: "Corporate office facility designed and constructed by Zain Manzoor & Co for Sardar Mohammad Ashraf D. Baluch — a turn-key build delivered to the highest finish standards."
   }
 ];
 

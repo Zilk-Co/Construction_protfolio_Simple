@@ -60,3 +60,33 @@ id = "FrwqS76cidc9I_6mBVkcG"
 uri = "file://artifacts/zmco-website/src/assets/projects/p9.png"
 type = "image"
 title = "Textile manufacturing plant exterior"
+
+[[generated]]
+id = "aDw_HZpmHTmt2hE8XxF9p"
+uri = "file://artifacts/zmco-website/src/assets/bg-park.png"
+type = "image"
+title = "Park at dusk"
+
+[[generated]]
+id = "9QuSvh_mhvvBIsaNUWLHE"
+uri = "file://artifacts/zmco-website/src/assets/bg-highway.png"
+type = "image"
+title = "Highway at night"
+
+[[generated]]
+id = "TyqnBV4xcNjwnM3AOOnUL"
+uri = "file://artifacts/zmco-website/src/assets/bg-canal.png"
+type = "image"
+title = "Canal at twilight"
+
+[[generated]]
+id = "0W59luWsEZmYTC6mlMfO2"
+uri = "file://artifacts/zmco-website/src/assets/bg-underpass.png"
+type = "image"
+title = "Underpass tunnel"
+
+[[generated]]
+id = "JBvMx6vjqLNvBBOEyDn3Z"
+uri = "file://artifacts/zmco-website/src/assets/bg-aerial.png"
+type = "image"
+title = "Aerial road network"

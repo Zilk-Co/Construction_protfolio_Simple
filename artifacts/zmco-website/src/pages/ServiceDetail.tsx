@@ -25,7 +25,7 @@ export default function ServiceDetail() {
   return (
     <PageTransition>
       {/* Hero Section */}
-      <section className="relative py-32 bg-[#050505] overflow-hidden border-b border-white/5">
+      <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden border-b border-white/5">
         <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 blur-[150px] rounded-full mix-blend-screen translate-x-1/2 -translate-y-1/2" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
