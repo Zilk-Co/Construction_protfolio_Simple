@@ -3,12 +3,16 @@ import PageTransition from "@/components/PageTransition";
 import { services } from "@/lib/data";
 import * as Icons from "lucide-react";
 import { Link } from "wouter";
+import bgCanal from "@/assets/bg-canal.png";
+import bgUnderpass from "@/assets/bg-underpass.png";
 
 export default function Services() {
   return (
     <PageTransition>
       {/* Hero */}
       <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: `url(${bgCanal})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/85 via-[#050505]/70 to-[#050505]/95" />
         <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 blur-[150px] rounded-full mix-blend-screen translate-x-1/2 -translate-y-1/2" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -85,8 +89,10 @@ export default function Services() {
       </section>
 
       {/* Process */}
-      <section className="py-24 md:py-32 bg-[#050505] border-t border-white/5">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="relative py-24 md:py-32 bg-[#050505] border-t border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: `url(${bgUnderpass})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/75 to-[#050505]/95" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-4xl md:text-5xl font-display mb-6">Our Methodology</h2>
             <p className="text-muted-foreground">A proven systematic approach to delivering monumental projects flawlessly.</p>

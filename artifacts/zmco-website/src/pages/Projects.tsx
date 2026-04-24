@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import { projects } from "@/lib/data";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import bgAerial from "@/assets/bg-aerial.png";
 
 const filters = [
   { id: "all", label: "All Projects" },
@@ -31,7 +32,9 @@ export default function Projects() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative py-20 md:py-28 bg-[#050505] border-b border-white/5">
+      <section className="relative py-20 md:py-28 bg-[#050505] border-b border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: `url(${bgAerial})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/85 via-[#050505]/70 to-[#050505]/95" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-3xl">
             <motion.div

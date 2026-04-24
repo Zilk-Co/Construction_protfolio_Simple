@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import PageTransition from "@/components/PageTransition";
 import LocationMap from "@/components/LocationMap";
 import bgHighway from "@/assets/bg-highway.png";
+import bgPark from "@/assets/bg-park.png";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,6 +28,8 @@ export default function Contact() {
     <PageTransition>
       {/* Hero */}
       <section className="relative py-20 md:py-28 bg-[#050505] overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: `url(${bgPark})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/85 via-[#050505]/70 to-[#050505]/95" />
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 blur-[150px] rounded-full mix-blend-screen -translate-y-1/2 -translate-x-1/2" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
