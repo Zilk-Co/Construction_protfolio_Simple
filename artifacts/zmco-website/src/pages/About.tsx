@@ -142,7 +142,7 @@ export default function About() {
                 viewport={{ once: true }}
                 className="w-64 h-64 shrink-0 rounded-full overflow-hidden border-4 border-primary/20"
               >
-                <img src={ceoImage} alt="Muneer Ahmed" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                <img src={ceoImage} alt="Muneer Ahmed" className="w-full h-full object-cover scale-[1.7] -translate-y-6 transition-transform duration-500" style={{ objectPosition: "50% 30%" }} />
               </motion.div>
               
               <motion.div
