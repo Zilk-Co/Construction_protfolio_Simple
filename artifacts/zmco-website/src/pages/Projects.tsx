@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import { projects } from "@/lib/data";
@@ -14,6 +14,15 @@ const filters = [
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const openId = params.get("open");
+    if (openId) {
+      const found = projects.find((p) => p.id === openId);
+      if (found) setSelectedProject(found);
+    }
+  }, []);
 
   const filteredProjects = projects.filter(
     (p) => activeFilter === "all" || p.status === activeFilter

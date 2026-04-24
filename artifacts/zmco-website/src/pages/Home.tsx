@@ -303,34 +303,38 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.slice(0, 2).map((project, index) => (
+            {projects.filter(p => p.status === "completed").slice(0, 2).map((project, index) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group relative aspect-[4/3] rounded-2xl overflow-hidden block"
               >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8">
-                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider rounded-sm">
-                        {project.category}
-                      </span>
-                      <span className="text-white/70 text-sm">{project.location}</span>
+                <Link
+                  href={`/projects?open=${project.id}`}
+                  className="group relative aspect-[4/3] rounded-2xl overflow-hidden block cursor-pointer"
+                >
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8">
+                    <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider rounded-sm">
+                          {project.category}
+                        </span>
+                        <span className="text-white/70 text-sm">{project.location}</span>
+                      </div>
+                      <h3 className="text-3xl font-display text-white mb-2">{project.title}</h3>
+                      <p className="text-white/60 line-clamp-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                        {project.description}
+                      </p>
                     </div>
-                    <h3 className="text-3xl font-display text-white mb-2">{project.title}</h3>
-                    <p className="text-white/60 line-clamp-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                      {project.description}
-                    </p>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
