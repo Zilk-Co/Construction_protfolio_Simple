@@ -49,7 +49,7 @@ export default function AnimatedBackground() {
               ease: "linear",
               delay: 5,
             }}
-            className="absolute -bottom-[30%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-blue-600/10 blur-[130px] will-change-transform"
+            className="absolute -bottom-[30%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-primary/10 blur-[130px] will-change-transform"
           />
         </>
       )}
