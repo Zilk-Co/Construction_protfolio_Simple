@@ -258,15 +258,19 @@ export default function CerebusAI() {
             <button
               id="cerebus-ai-toggle"
               onClick={() => setOpen(true)}
-              className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95"
+              className="relative flex items-center gap-3 px-4 py-2.5 rounded-full shadow-2xl transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, hsl(214 88% 52%) 0%, hsl(230 80% 60%) 100%)',
-                boxShadow: '0 8px 32px hsla(214, 88%, 52%, 0.45)',
+                background: 'linear-gradient(135deg, hsl(214 60% 40%) 0%, hsl(230 50% 35%) 100%)',
+                boxShadow: '0 8px 32px hsla(214, 60%, 40%, 0.35)',
+                border: '1px solid rgba(255,255,255,0.1)'
               }}
               aria-label="Open AI Assistant"
             >
-              <Bot size={26} className="text-white" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-white animate-pulse shadow-md" />
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-semibold text-white tracking-widest uppercase">Available</span>
+              </div>
+              <Bot size={20} className="text-white ml-2" />
             </button>
             <div className="absolute bottom-full right-0 mb-3 px-4 py-2 bg-gray-900 border border-white/15 rounded-xl text-xs font-semibold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-2xl pointer-events-none">
               <Sparkles size={11} className="inline mr-1.5 text-blue-400" />
@@ -316,7 +320,7 @@ export default function CerebusAI() {
                   <h4 className="text-sm font-bold text-white tracking-wide">ZMCO AI Assistant</h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-widest">Online</p>
+                    <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-widest">Available</p>
                   </div>
                 </div>
               </div>

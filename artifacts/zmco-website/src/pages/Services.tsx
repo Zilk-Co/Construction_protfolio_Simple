@@ -107,7 +107,7 @@ export default function Services() {
 
                     {/* Decorative corner accent */}
                     <div className="absolute top-0 right-0 w-48 h-48 rounded-bl-full -mr-24 -mt-24 transition-transform duration-700 group-hover:scale-150 blur-2xl"
-                      style={{ background: 'hsla(214,88%,52%,0.12)' }} />
+                      style={{ background: 'hsla(214,50%,45%,0.08)' }} />
 
                     {/* Project Badge */}
                     <div className="mb-8 self-start px-4 py-1.5 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20">
@@ -118,12 +118,12 @@ export default function Services() {
                     <div
                       className="mb-10 w-20 h-20 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:rotate-6"
                       style={{
-                        background: 'linear-gradient(135deg, hsla(214,88%,52%,0.20) 0%, hsla(245,80%,65%,0.12) 100%)',
-                        border: '1px solid hsla(214,88%,52%,0.35)',
-                        boxShadow: '0 4px 20px hsla(214,88%,52%,0.18)',
+                        background: 'linear-gradient(135deg, hsla(214,50%,45%,0.15) 0%, hsla(245,40%,50%,0.08) 100%)',
+                        border: '1px solid hsla(214,50%,50%,0.2)',
+                        boxShadow: '0 4px 20px hsla(214,50%,40%,0.1)',
                       }}
                     >
-                      {Icon && <Icon size={36} className="text-primary group-hover:scale-110 transition-transform" />}
+                      {Icon && <Icon size={36} className="text-blue-300 group-hover:scale-110 transition-transform" />}
                     </div>
 
                     <h3 className="text-3xl font-display mb-4 text-white/90 group-hover:text-white transition-colors duration-300">
