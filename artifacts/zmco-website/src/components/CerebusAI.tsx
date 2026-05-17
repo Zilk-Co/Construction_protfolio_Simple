@@ -255,10 +255,15 @@ export default function CerebusAI() {
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             className="fixed bottom-6 right-6 z-[9999] group"
           >
+            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 bg-gray-900 border border-white/10 rounded-full shadow-xl pointer-events-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-semibold text-white tracking-widest uppercase">Available</span>
+            </div>
+            
             <button
               id="cerebus-ai-toggle"
               onClick={() => setOpen(true)}
-              className="relative flex items-center gap-3 px-4 py-2.5 rounded-full shadow-2xl transition-all duration-300"
+              className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300"
               style={{
                 background: 'linear-gradient(135deg, hsl(214 60% 40%) 0%, hsl(230 50% 35%) 100%)',
                 boxShadow: '0 8px 32px hsla(214, 60%, 40%, 0.35)',
@@ -266,16 +271,8 @@ export default function CerebusAI() {
               }}
               aria-label="Open AI Assistant"
             >
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-semibold text-white tracking-widest uppercase">Available</span>
-              </div>
-              <Bot size={20} className="text-white ml-2" />
+              <Bot size={28} className="text-white" />
             </button>
-            <div className="absolute bottom-full right-0 mb-3 px-4 py-2 bg-gray-900 border border-white/15 rounded-xl text-xs font-semibold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-2xl pointer-events-none">
-              <Sparkles size={11} className="inline mr-1.5 text-blue-400" />
-              Ask ZMCO AI
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
