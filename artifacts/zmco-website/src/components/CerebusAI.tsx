@@ -8,13 +8,31 @@ interface Message {
   content: string;
 }
 
+const DEFAULT_KNOWLEDGE = `
+Zain Manzoor & Co. (ZMCO) is a premier engineering, construction, and project management firm in Pakistan.
+The CEO and founder of Zain Manzoor & Co. is Mr. Muneer Ahmed Khoso, a visionary leader driving civil engineering and construction excellence.
+With over 12 years of industry experience and excellence, ZMCO has successfully completed a total of 11 major landmark projects across Pakistan.
+Key landmark projects include the Rohri Canal Lining (Sindh), Indus River Bridge (Sindh), Al-Shifa General Hospital (Lahore), Capital Residency Hub (Islamabad), and Gwadar Logistics Park.
+ZMCO offers a wide range of premium services: Construction & Contracting, Civil Engineering, Structural Design, Project Management, MEP Services, and Interior & Renovation.
+Contact ZMCO at 0315 2185221 or email zmco2025@gmail.com. The head office is located in Pakistan.
+Our heavy equipment fleet includes HOWO dump trucks, CAT 330D excavators, and we self-perform all earthworks and site logistics.
+`;
+
 function findAnswer(question: string, knowledgeBase: string): string {
-  if (!knowledgeBase.trim()) {
-    return "I'm Cerebus AI, Zain Manzoor & Co's virtual assistant. My knowledge base hasn't been configured yet. Please contact the team directly for assistance.";
+  const kb = (knowledgeBase || '').trim() ? knowledgeBase : DEFAULT_KNOWLEDGE;
+  const q = question.toLowerCase();
+
+  // 1. Specific CEO / Leadership Matches
+  if (q.includes('ceo') || q.includes('boss') || q.includes('owner') || q.includes('founder') || q.includes('president') || q.includes('muneer') || q.includes('munner') || q.includes('khoso') || q.includes('khooso') || q.includes('who runs') || q.includes('who leads')) {
+    return "The CEO and founder of Zain Manzoor & Co. (ZMCO) is Mr. Muneer Ahmed Khoso. Under his visionary leadership, the company has delivered top-tier civil engineering, infrastructure, and construction projects across Pakistan with a commitment to quality and safety.";
   }
 
-  const q = question.toLowerCase();
-  const lines = knowledgeBase.split('\n').filter(l => l.trim());
+  // 2. Specific Project Count / Year Stats Matches
+  if ((q.includes('how many') && q.includes('project')) || q.includes('total project') || (q.includes('year') && q.includes('experience')) || q.includes('how long') || q.includes('history') || q.includes('excellence')) {
+    return "Zain Manzoor & Co. proudly boasts over 12 years of engineering excellence, during which we have successfully executed a total of 11 landmark projects across Pakistan. Our portfolio spans massive infrastructure developments, hospitals, residential high-rises, and industrial parks.";
+  }
+
+  const lines = kb.split('\n').filter(l => l.trim());
   
   // Try to find the most relevant line(s)
   const scored = lines.map(line => {
@@ -39,10 +57,10 @@ function findAnswer(question: string, knowledgeBase: string): string {
     return "Zain Manzoor & Co offers Construction & Contracting, Civil Engineering, Structural Design, Project Management, MEP Services, and Interior & Renovation. Visit our Services page for details.";
   }
   if (q.includes('project')) {
-    return "We have completed major projects including the Rohri Canal Lining, Indus River Bridge, and many commercial and industrial developments. Visit our Projects page for the full portfolio.";
+    return "We have completed a total of 11 major projects including the Rohri Canal Lining, Indus River Bridge, and Al-Shifa General Hospital. Visit our Projects page for the full portfolio.";
   }
 
-  return "I couldn't find a specific answer in my knowledge base. For detailed inquiries, please contact Zain Manzoor & Co directly at 0315 2185221 or visit the Contact page.";
+  return "I couldn't find a specific answer in my knowledge base. For detailed inquiries, please contact Zain Manzoor & Co directly at 0315 2185221 or visit our Contact page.";
 }
 
 export default function CerebusAI() {
