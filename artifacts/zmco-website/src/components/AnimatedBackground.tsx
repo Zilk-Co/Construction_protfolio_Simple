@@ -11,13 +11,11 @@ export default function AnimatedBackground() {
       {/* Animated gradient blobs */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-          x: [0, 50, 0],
-          y: [0, -50, 0],
+          x: [0, 60, 0],
+          y: [0, -60, 0],
         }}
         transition={{
-          duration: 20,
+          duration: 35,
           repeat: Infinity,
           ease: "linear",
         }}
@@ -28,13 +26,11 @@ export default function AnimatedBackground() {
         <>
           <motion.div
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.4, 0.2],
-              x: [0, -70, 0],
-              y: [0, 60, 0],
+              x: [0, -80, 0],
+              y: [0, 80, 0],
             }}
             transition={{
-              duration: 25,
+              duration: 45,
               repeat: Infinity,
               ease: "linear",
               delay: 2,
@@ -44,12 +40,11 @@ export default function AnimatedBackground() {
 
           <motion.div
             animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.1, 0.3, 0.1],
-              x: [0, 100, 0],
+              x: [0, 120, 0],
+              y: [0, -100, 0],
             }}
             transition={{
-              duration: 30,
+              duration: 50,
               repeat: Infinity,
               ease: "linear",
               delay: 5,

@@ -105,9 +105,9 @@ export default function Services() {
                     {/* Top accent glow on hover */}
                     <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Decorative corner accent (simplified for performance) */}
-                    <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full -mr-16 -mt-16 blur-xl"
-                      style={{ background: 'hsla(214,50%,45%,0.05)' }} />
+                    {/* Decorative corner accent (optimized animation) */}
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full -mr-16 -mt-16 blur-lg opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 pointer-events-none"
+                      style={{ background: 'hsla(214,60%,55%,0.15)', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }} />
 
                     {/* Project Badge */}
                     <div className="mb-5 self-start px-3 py-1 bg-primary text-white rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg shadow-primary/20">
