@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { useAdmin } from '@/context/AdminContext';
-import { Settings, Layout, Briefcase, Type, Palette, Bot, Save, Trash2, Plus, Monitor, LogOut, FileText, ShieldCheck, Edit2, X, Check, Loader2, Upload, Moon, Sun, ArrowUpToLine, Wrench } from 'lucide-react';
+import { Settings, Layout, Briefcase, Type, Palette, Bot, Save, Trash2, Plus, Monitor, LogOut, FileText, ShieldCheck, Edit2, X, Check, Loader2, Upload, Moon, Sun, ArrowUpToLine, Wrench, Eraser } from 'lucide-react';
 import PageTransition from '@/components/PageTransition';
 import * as Icons from 'lucide-react';
 import { type MachineryItem, loadMachinery } from '@/pages/Machinery';
@@ -468,22 +468,54 @@ export default function AdminDashboard() {
                           <div key={key} className="p-4 bg-secondary/30 border border-white/5 rounded-2xl flex items-center justify-between gap-4 group hover:border-primary/25 transition-all">
                             <div className="min-w-0 flex-1">
                               <span className="text-[10px] text-primary uppercase tracking-widest font-black block mb-1">{key}</span>
-                              <span className="text-xs text-white/70 font-mono block break-all leading-normal">{val}</span>
+                              <div className="max-h-20 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                                <span className="text-xs text-white/70 font-mono block break-all leading-normal whitespace-pre-wrap">{val}</span>
+                              </div>
                             </div>
-                            <button
-                              onClick={async () => {
-                                if (confirm(`Clear this custom content override and revert to the default text?`)) {
-                                  setSaving(true);
-                                  await deleteContent(key);
-                                  setSaving(false);
-                                  showToast('Override cleared successfully.');
-                                }
-                              }}
-                              className="w-8 h-8 rounded-lg flex items-center justify-center bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition-all shrink-0 cursor-pointer"
-                              title="Clear Override"
-                            >
-                              <Trash2 size={14} />
-                            </button>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <button
+                                onClick={async () => {
+                                  if (confirm(`Clear only the text value of "${key}"? (Font styles and colors will be kept, text will be emptied)`)) {
+                                    setSaving(true);
+                                    let nextVal = "";
+                                    try {
+                                      const parsed = JSON.parse(val);
+                                      if (parsed && typeof parsed === 'object' && parsed.text !== undefined) {
+                                        parsed.text = "";
+                                        nextVal = JSON.stringify(parsed);
+                                      } else {
+                                        nextVal = "";
+                                      }
+                                    } catch {
+                                      nextVal = "";
+                                    }
+                                    updateContent(key, nextVal);
+                                    await new Promise(r => setTimeout(r, 200));
+                                    await flushContent();
+                                    setSaving(false);
+                                    showToast('Text content cleared!');
+                                  }
+                                }}
+                                className="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-all cursor-pointer"
+                                title="Clear Text Only"
+                              >
+                                <Eraser size={14} />
+                              </button>
+                              <button
+                                onClick={async () => {
+                                  if (confirm(`Completely delete custom override "${key}" and restore default?`)) {
+                                    setSaving(true);
+                                    await deleteContent(key);
+                                    setSaving(false);
+                                    showToast('Override deleted successfully.');
+                                  }
+                                }}
+                                className="w-8 h-8 rounded-lg flex items-center justify-center bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition-all cursor-pointer"
+                                title="Delete Override & Restore Default"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>
