@@ -146,3 +146,89 @@ export default function Services() {
     </PageTransition>
   );
 }
+
+function ServiceCard({ service, index, projects }: { service: Service; index: number; projects: Project[] }) {
+  const Icon = Icons[service.icon as keyof typeof Icons] as React.ElementType;
+  const projectCount = projects.filter(p => p.serviceIds?.includes(service.id)).length;
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  const background = useTransform(
+    [mouseX, mouseY],
+    ([x, y]) => `radial-gradient(650px circle at ${x}px ${y}px, hsla(var(--primary) / 0.15), transparent 80%)`
+  );
+
+  return (
+    <Link href={`/services/${service.id}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "0px" }}
+        transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
+        onMouseMove={onMouseMove}
+        className="group relative rounded-2xl overflow-hidden cursor-pointer h-full will-change-transform"
+      >
+        <div
+          className="relative flex flex-col h-full p-8 rounded-2xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-premium-hover"
+          style={{
+            background: 'var(--service-card-bg)',
+            border: '1px solid var(--service-card-border)',
+            boxShadow: 'var(--service-card-shadow)',
+          }}
+        >
+          {/* Top accent glow on hover */}
+          <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-primary/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Spotlight Effect */}
+          <motion.div
+            className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+            style={{ background }}
+          />
+
+          {/* Decorative corner accent */}
+          <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full -mr-16 -mt-16 blur-lg opacity-40 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 pointer-events-none"
+            style={{ background: 'var(--service-glow)', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }} />
+
+          {/* Project Badge */}
+          <div className="mb-5 self-start px-3 py-1 bg-primary text-white rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 relative z-10">
+            {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
+          </div>
+
+          {/* Icon */}
+          <div
+            className="mb-6 w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 relative z-10"
+            style={{
+              background: 'var(--icon-bg)',
+              border: '1px solid var(--icon-border)',
+              boxShadow: 'var(--icon-shadow)',
+            }}
+          >
+            {Icon && <Icon size={28} className="text-primary transition-transform duration-300" />}
+          </div>
+
+          <h3 className="text-3xl font-display mb-4 text-card-foreground/90 group-hover:text-card-foreground transition-colors duration-300 relative z-10">
+            {service.title}
+          </h3>
+          <p className="text-card-foreground/60 leading-relaxed flex-grow text-sm group-hover:text-card-foreground/80 transition-colors relative z-10">
+            {service.description}
+          </p>
+
+          {/* CTA */}
+          <div className="mt-6 pt-5 border-t border-card-border/40 flex items-center justify-between relative z-10">
+            <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 transition-all">
+              Explore Capability
+              <Icons.ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
