@@ -78,13 +78,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <div
           className="relative flex flex-col h-full p-8 rounded-2xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-premium-hover"
           style={{
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+            background: 'linear-gradient(145deg, rgba(30,60,140,0.28) 0%, rgba(20,40,110,0.18) 100%)',
+            border: '1px solid rgba(80,130,255,0.22)',
+            boxShadow: '0 4px 28px rgba(0,10,40,0.45)',
           }}
         >
-          {/* Top accent line */}
-          <div className="absolute top-0 left-8 right-8 h-[2px] rounded-full bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* Top accent line — always visible */}
+          <div className="absolute top-0 left-8 right-8 h-[2px] rounded-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
           {/* Spotlight Effect */}
           <motion.div
@@ -96,29 +96,29 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           <div
             className="relative mb-6 inline-block self-start p-4 rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
             style={{
-              background: 'linear-gradient(135deg, hsla(214,88%,52%,0.18) 0%, hsla(245,80%,65%,0.10) 100%)',
-              border: '1px solid hsla(214,88%,52%,0.30)',
-              boxShadow: '0 4px 16px hsla(214,88%,52%,0.15)',
+              background: 'linear-gradient(135deg, hsla(214,88%,52%,0.25) 0%, hsla(245,80%,65%,0.15) 100%)',
+              border: '1px solid hsla(214,88%,52%,0.40)',
+              boxShadow: '0 4px 16px hsla(214,88%,52%,0.20)',
             }}
           >
-            {Icon && <Icon size={30} className="text-primary transition-transform duration-500" />}
+            {Icon && <Icon size={30} className="text-primary" />}
           </div>
 
-          {/* Content */}
+          {/* Content — always visible, no hover fade */}
           <div className="relative z-10">
-            <h3 className="text-xl font-display mb-3 text-white/90 group-hover:text-white transition-colors duration-300">
+            <h3 className="text-xl font-display mb-3 text-white">
               {service.title}
             </h3>
-            <p className="text-white/45 text-sm line-clamp-3 mb-6 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
+            <p className="text-white/65 text-sm line-clamp-3 mb-6 leading-relaxed">
               {service.description}
             </p>
           </div>
 
-          {/* CTA */}
-          <div className="relative mt-auto flex items-center gap-2 text-primary text-sm font-bold tracking-wider uppercase group-hover:gap-4 transition-all duration-300">
+          {/* CTA — always visible */}
+          <div className="relative mt-auto flex items-center gap-3 text-primary text-sm font-bold tracking-wider uppercase">
             <span className="relative">
               Explore Details
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-primary/60" />
             </span>
             <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
           </div>

@@ -169,8 +169,13 @@ function generateResponse(question: string, extraKnowledge: string): string {
     }
   }
 
+  // Work with us / Careers / Partnership / Subcontractor
+  if (/how (can|do) i work|work with (you|us|zmco|the company|this company)|join|career|job|hiring|vacancy|vacancies|recruit|employment|apply|internship|subcontract|partner|collaborate|supplier|vendor|business with/i.test(q)) {
+    return `There are **two great ways to work with ${company.name}**:\n\n**1. 🤝 As a Business Partner / Client**\nIf you have a construction or engineering project, reach out to us to discuss scope, timeline, and budget. We accept inquiries for all project types — infrastructure, commercial, residential, and industrial.\n\n📞 **Call:** ${company.phone}\n📧 **Email:** ${company.email}\n\n**2. 💼 As a Professional / Subcontractor**\nWe are always looking for skilled engineers, site managers, and specialized subcontractors to join our growing team. Send your CV or company profile to our email and our HR team will review your application.\n\nVisit our **Contact page** to submit an inquiry directly.`;
+  }
+
   // All projects listing
-  if (/project|portfolio|work|what.*(built|done|completed|made)/i.test(q)) {
+  if (/project|portfolio|what.*(built|done|completed|made)/i.test(q)) {
     const list = projects.map((p, i) => `${i + 1}. **${p.name}** — ${p.location} (${p.category})`).join('\n');
     return `Here are our **${stats.projects} landmark projects**:\n\n${list}\n\nVisit our **Projects page** for images, details, and contract values.`;
   }
@@ -533,7 +538,6 @@ export default function CerebusAI() {
                   <Send size={15} className="text-white" />
                 </button>
               </div>
-              <p className="text-center text-[10px] text-white/20 mt-2">ZMCO AI · Powered by site knowledge</p>
             </div>
           </motion.div>
         )}
