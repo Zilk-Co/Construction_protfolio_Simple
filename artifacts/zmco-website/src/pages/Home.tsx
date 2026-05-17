@@ -10,6 +10,7 @@ import heroBg from "@/assets/hero.png";
 import parkBg from "@/assets/bg-park.png";
 import underpassBg from "@/assets/bg-underpass.png";
 import aerialBg from "@/assets/bg-aerial.png";
+import servicesBg from "@/assets/hero-services.png";
 
 type Project = { id: string; title: string; location: string; category: string; status: string; year: string; image: string; description: string; employer?: string; contractValue?: string; executedValue?: string; awarded?: string; completed?: string; scope?: string; gallery?: string[]; serviceIds?: string[]; };
 type Service = { id: string; title: string; description: string; longDescription: string; icon: string; capabilities?: string[]; benefits?: string[]; process?: any[]; };
@@ -306,12 +307,16 @@ export default function Home() {
       </section>
 
       {/* SERVICES PREVIEW */}
-      <section className="py-24 md:py-32 relative border-y border-border">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-60" 
-          style={{ backgroundImage: `url(${aerialBg})` }}
+      <section className="py-24 md:py-32 relative border-y border-border" style={{ backgroundColor: '#060810' }}>
+        {/* Header image strip at the very top */}
+        <div
+          className="absolute top-0 left-0 right-0 h-64 bg-cover bg-center"
+          style={{ backgroundImage: `url(${servicesBg})`, opacity: 0.45 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background/95" />
+        {/* Fade image into dark section below */}
+        <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#060810]" />
+        {/* Dark background for card area */}
+        <div className="absolute inset-0 top-64" style={{ backgroundColor: '#060810' }} />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <motion.div 
