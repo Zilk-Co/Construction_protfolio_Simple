@@ -13,6 +13,7 @@ import {
   usersTable,
   projectsTable,
   servicesTable,
+  siteContentTable,
 } from "@workspace/db/schema";
 
 // ──────────────────────────────────────────────────
@@ -318,6 +319,89 @@ async function main() {
       });
   }
   console.log(`✅  ${services.length} services seeded`);
+
+  // 4. Site Content (Default AI Knowledge Base)
+  const defaultAIKnowledge = `ZAIN MANZOOR & CO. (ZMCO) CORPORATE KNOWLEDGE BASE & PROFILE
+
+[COMPANY PROFILE]
+- Name: Zain Manzoor & Co. Construction and Engineering PVT LTD (ZMCO)
+- Tagline: "Building the Future of Pakistan"
+- Founder & CEO: Mr. Muneer Ahmed Khoso (founded the firm in 2013)
+- Industry Stand: Premier construction, civil engineering, project management, and MEP firm with 12+ years of industry excellence.
+- Registered: Fully registered under the Pakistan Engineering Council (PEC).
+- Total Projects Delivered: 11 major infrastructure, residential, commercial, and industrial projects across Pakistan.
+- Team Strength: Over 100+ highly trained professionals including structural engineers, site managers, architects, QA/QC technicians, and safety coordinators.
+- Satisfaction Rating: 100% client satisfaction with zero safety incidents.
+
+[CONTACT DETAILS]
+- Corporate Phone: 0315 2185221
+- Corporate Email: zmco2025@gmail.com
+- Operational Hours: Monday to Saturday, 9:00 AM to 6:00 PM.
+- Quotes: Estimates are processed within 24 to 48 hours. Clients can request a quote by emailing details to zmco2025@gmail.com or calling 0315 2185221.
+
+[CORE SERVICES & CAPABILITIES]
+1. Construction & Contracting:
+   - Capability: High-rise commercial and residential projects, structural framework, brickwork, excavation, site layout, concrete pouring, and custom finishes.
+2. Civil Engineering:
+   - Capability: Roads, highways, canal lining (including Rohri Canal), bridge structures, storm-water drainage, and comprehensive earthworks.
+3. Structural Design:
+   - Capability: Computer-aided structural drafting, load-bearing assessments, high-wind load engineering, seismic analysis, and compliance codes.
+4. Project Management:
+   - Capability: Integrated scheduling, cost budgeting, materials tracking, subcontractor coordination, and strict quality assurance checks.
+5. MEP Services:
+   - Capability: High-voltage electrical grids, central HVAC system installation, smart-building controls (BMS), industrial firefighting plumbing, and sanitation networks.
+6. Interior & Renovation:
+   - Capability: Adaptive reuse of old structures, hospital and clinic grade fit-outs, hotel millwork, spatial planning, and high-end acoustic treatments.
+
+[LANDMARK PROJECTS]
+1. Rohri Canal Lining:
+   - Location: Sindh, Pakistan
+   - Scope: Large-scale concrete canal lining extending several kilometers to improve irrigation efficiency and stop water logging/seepage.
+2. Indus River Bridge:
+   - Location: Sindh, Pakistan
+   - Scope: Heavy-civil bridge infrastructure crossing the Indus River, facilitating high-capacity regional logistics.
+3. Al-Shifa General Hospital:
+   - Location: Lahore, Pakistan
+   - Scope: Multi-floor specialty healthcare facility construction including advanced HVAC isolation zones, sterile rooms, and electrical backups.
+4. Capital Residency Hub:
+   - Location: Islamabad, Pakistan
+   - Scope: A premium multi-story luxury residential apartment high-rise equipped with parking basements and a panoramic sky lounge.
+5. Gwadar Logistics Park:
+   - Location: Gwadar, Balochistan
+   - Scope: Strategic warehousing facilities and deep-foundation industrial bays supporting trade logistics along the CPEC route.
+6. Faisalabad Industrial Estate:
+   - Location: Faisalabad, Punjab
+   - Scope: Turnkey construction of manufacturing plants, factory bays, access roads, and high-capacity stormwater networks.
+7. High-End Commercial Plaza:
+   - Location: Karachi, Sindh
+   - Scope: A 12-story commercial corporate tower featuring energy-efficient glass facade framing, central cooling, and open-plan workspaces.
+8. DHA Residential Mansions:
+   - Location: Lahore, Punjab
+   - Scope: Bespoke luxury residential mansions featuring custom marble finishes, smart-home automation, and high-performance architectural design.
+9. Multan Highway Bypass:
+   - Location: Multan, Punjab
+   - Scope: A dual-lane highway bypass facilitating bypass traffic flow and reducing congestion within downtown Multan.
+
+[HEAVY EQUIPMENT FLEET]
+- CAT 330D Excavators (2 units)
+- HOWO Heavy-Duty Dump Trucks (4 units)
+- Dynapac Road Rollers & Soil Compactors (2 units)
+- Sany Mobile Concrete Batching Plants (1 unit)
+- Zoomlion High-Altitude Tower Cranes (1 unit)
+- Leica Geosystems High-Precision Surveying & GPS Systems (3 units)
+
+[CORPORATE SAFETY & COMPLIANCE]
+- ZMCO Shield: A zero-incident safety framework enforcing 100% PPE compliance (hard hats, high-vis vests, steel-toe boots), regular safety audits, and mandatory daily toolbox talks.
+- Certifications: ISO 9001:2015 (Quality Management System) and ISO 45001:2018 (Occupational Health & Safety).`;
+
+  await db
+    .insert(siteContentTable)
+    .values({ key: "aiKnowledgeBase", value: defaultAIKnowledge })
+    .onConflictDoUpdate({
+      target: siteContentTable.key,
+      set: { value: defaultAIKnowledge, updatedAt: new Date() },
+    });
+  console.log("✅  Default AI Knowledge Base seeded");
 
   console.log("🎉  Seeding complete!");
   await pool.end();

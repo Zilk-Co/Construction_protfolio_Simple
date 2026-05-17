@@ -11,7 +11,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdminToolbar from "@/components/AdminToolbar";
-import CerebusAI from "@/components/CerebusAI";
+import ZmcAI from "@/components/ZmcAI";
 import { AdminProvider } from "@/context/AdminContext";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -66,7 +66,7 @@ function AppContent() {
       </main>
       {!isHideLayout && <Footer />}
       <AdminToolbar />
-      <CerebusAI />
+      <ZmcAI />
     </>
   );
 }

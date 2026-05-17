@@ -178,7 +178,7 @@ export default function AdminDashboard() {
               { id: 'machinery', icon: <Wrench size={16} />, label: 'Machinery' },
               { id: 'content', icon: <FileText size={16} />, label: 'Text Content' },
               { id: 'design', icon: <Palette size={16} />, label: 'Design' },
-              { id: 'ai', icon: <Bot size={16} />, label: 'Cerebus AI' },
+              { id: 'ai', icon: <Bot size={16} />, label: 'ZMC AI' },
             ].map(tab => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:bg-accent hover:text-foreground'}`}>
@@ -540,7 +540,7 @@ export default function AdminDashboard() {
               {/* ── AI ── */}
               {activeTab === 'ai' && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                  <h1 className="text-3xl font-display">Cerebus AI Knowledge Base</h1>
+                  <h1 className="text-3xl font-display">ZMC AI Knowledge Base</h1>
                   <p className="text-muted-foreground text-sm">Paste your company data, policies, and FAQs. The AI chatbot uses this to answer visitor questions.</p>
                   <div className="bg-card border border-white/5 rounded-2xl p-6 space-y-4">
                     <textarea value={aiKnowledgeBase} onChange={e => updateAIKnowledge(e.target.value)} className="w-full h-80 bg-secondary/50 border border-border rounded-xl p-4 text-sm text-foreground focus:border-primary outline-none font-mono resize-none" placeholder="Enter company data, FAQs, project details..." />

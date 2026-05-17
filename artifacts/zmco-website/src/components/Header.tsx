@@ -53,7 +53,7 @@ export default function Header() {
               <textarea
                 value={aiKnowledgeBase}
                 onChange={(e) => updateAIKnowledge(e.target.value)}
-                placeholder="Paste company data, FAQs, policies for Cerebus AI..."
+                placeholder="Paste company data, FAQs, policies for ZMC AI..."
                 className="flex-1 bg-secondary/50 border border-border rounded-lg px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 resize-none h-[36px]"
               />
               <button onClick={() => setAiTextOpen(false)} className="text-muted-foreground hover:text-white p-1">

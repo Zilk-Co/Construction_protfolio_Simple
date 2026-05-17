@@ -139,7 +139,7 @@ function formatMessage(text: string) {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function CerebusAI() {
+export default function ZmcAI() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -261,7 +261,7 @@ export default function CerebusAI() {
             </div>
             
             <button
-              id="cerebus-ai-toggle"
+              id="zmc-ai-toggle"
               onClick={() => setOpen(true)}
               className="relative w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300"
               style={{
@@ -452,7 +452,7 @@ export default function CerebusAI() {
                   disabled={isTyping}
                 />
                 <button
-                  id="cerebus-ai-send"
+                  id="zmc-ai-send"
                   onClick={handleSend}
                   disabled={!input.trim() || isTyping}
                   className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed hover:scale-105 active:scale-95 flex-shrink-0"
