@@ -6,10 +6,13 @@ import { Groq } from "groq-sdk";
 
 const router = Router();
 
-// Initialize Groq client
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+let groq: Groq;
+function getGroq() {
+  if (!groq) {
+    groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+  return groq;
+}
 
 router.post("/chat", async (req, res) => {
   try {
@@ -69,7 +72,7 @@ RULES:
     res.setHeader("Connection", "keep-alive");
 
     // 5. Call Groq
-    const stream = await groq.chat.completions.create({
+    const stream = await getGroq().chat.completions.create({
       model: "llama-3.3-70b-versatile", // Or llama3-8b-8192
       messages: chatMessages as any,
       stream: true,

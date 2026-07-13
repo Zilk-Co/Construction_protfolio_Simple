@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import ImageLightbox from "@/components/ImageLightbox";
 import heroProjectsBg from "@/assets/hero-projects.png";
 import { useLocation } from "wouter";
-import { X, Loader2, Upload, Plus } from "lucide-react";
+import { X, Loader2, Plus } from "lucide-react";
 import { EditableText, EditableImage, useAdmin } from "@/context/AdminContext";
 
 const filters = [
@@ -33,6 +33,8 @@ export default function Projects() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const dialogContentRef = useRef<HTMLDivElement>(null);
+  const [galleryUrl, setGalleryUrl] = useState('');
+  const [showGalleryUrlInput, setShowGalleryUrlInput] = useState(false);
 
 
   useEffect(() => {
@@ -420,24 +422,57 @@ export default function Projects() {
                         ))}
                         
                         {isEditMode && (
-                          <label className="aspect-square rounded-lg border-2 border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition-colors bg-white/5">
-                            <Plus size={24} className="text-muted-foreground mb-1" />
-                            <span className="text-[10px] uppercase font-bold text-muted-foreground">Add Img</span>
-                            <input 
-                              type="file" 
-                              className="hidden" 
-                              accept="image/*"
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
-                                if (!file) return;
-                                const url = await uploadFile(file);
-                                if (url) {
-                                  const nextGal = [...(selectedProject.gallery || []), url];
-                                  handleProjectUpdate(selectedProject.id, { gallery: nextGal });
-                                }
-                              }}
-                            />
-                          </label>
+                          <>
+                            {!showGalleryUrlInput ? (
+                              <button
+                                onClick={() => setShowGalleryUrlInput(true)}
+                                className="aspect-square rounded-lg border-2 border-dashed border-white/10 flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition-colors bg-white/5"
+                              >
+                                <Plus size={24} className="text-muted-foreground mb-1" />
+                                <span className="text-[10px] uppercase font-bold text-muted-foreground">Add Img</span>
+                              </button>
+                            ) : (
+                              <div className="aspect-square rounded-lg border-2 border-primary/50 flex flex-col items-center justify-center bg-white/5 p-2 gap-1">
+                                <input
+                                  type="url"
+                                  value={galleryUrl}
+                                  onChange={e => setGalleryUrl(e.target.value)}
+                                  placeholder="Paste URL"
+                                  className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-primary text-center"
+                                  autoFocus
+                                  onKeyDown={async (e) => {
+                                    if (e.key === 'Enter' && galleryUrl.trim()) {
+                                      const url = await uploadFile(galleryUrl);
+                                      if (url) {
+                                        const nextGal = [...(selectedProject.gallery || []), url];
+                                        handleProjectUpdate(selectedProject.id, { gallery: nextGal });
+                                      }
+                                      setGalleryUrl('');
+                                      setShowGalleryUrlInput(false);
+                                    }
+                                    if (e.key === 'Escape') { setShowGalleryUrlInput(false); setGalleryUrl(''); }
+                                  }}
+                                />
+                                <div className="flex gap-1">
+                                  <button
+                                    onClick={async () => {
+                                      if (galleryUrl.trim()) {
+                                        const url = await uploadFile(galleryUrl);
+                                        if (url) {
+                                          const nextGal = [...(selectedProject.gallery || []), url];
+                                          handleProjectUpdate(selectedProject.id, { gallery: nextGal });
+                                        }
+                                        setGalleryUrl('');
+                                      }
+                                      setShowGalleryUrlInput(false);
+                                    }}
+                                    className="text-[9px] px-2 py-0.5 rounded bg-primary text-white font-bold"
+                                  >Add</button>
+                                  <button onClick={() => { setShowGalleryUrlInput(false); setGalleryUrl(''); }} className="text-[9px] px-2 py-0.5 rounded border border-white/10 text-muted-foreground">Cancel</button>
+                                </div>
+                              </div>
+                            )}
+                          </>
                         )}
 
                         {(!selectedProject.gallery || selectedProject.gallery.length === 0) && !isEditMode && (

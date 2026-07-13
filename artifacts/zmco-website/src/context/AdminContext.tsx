@@ -18,7 +18,7 @@ interface AdminContextType {
   updateTheme: (theme: Partial<AdminContextType['siteTheme']>) => void;
   aiKnowledgeBase: string;
   updateAIKnowledge: (text: string) => void;
-  uploadFile: (file: File) => Promise<string | null>;
+  uploadFile: (url: string) => Promise<string | null>;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
@@ -174,24 +174,14 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     updateContent('aiKnowledgeBase', text);
   };
 
-  const uploadFile = async (file: File): Promise<string | null> => {
-    if (!token) return null;
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
-      if (!res.ok) throw new Error('Upload failed');
-      const data = await res.json();
-      return data.url;
-    } catch (err) {
-      console.error('Upload error:', err);
+  const uploadFile = async (url: string): Promise<string | null> => {
+    const trimmed = url.trim();
+    if (!trimmed) return null;
+    if (!trimmed.match(/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg|avif)(\?.*)?$/i)) {
+      alert('Please paste a direct image URL ending in .jpg, .png, .webp, etc.');
       return null;
     }
+    return trimmed;
   };
 
   // Convert hex → HSL for CSS custom properties used by Tailwind
@@ -453,16 +443,15 @@ export const EditableImage: React.FC<{
 }> = ({ id, defaultSrc, alt, className, aspectRatio, onUpdate }) => {
   const { isEditMode, siteContent, updateContent, uploadFile } = useAdmin();
   const [isUploading, setIsUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showUrlInput, setShowUrlInput] = useState(false);
+  const [urlValue, setUrlValue] = useState('');
 
   const currentSrc = onUpdate ? defaultSrc : (siteContent[id] || defaultSrc);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const handleUrlSubmit = async () => {
+    if (!urlValue.trim()) return;
     setIsUploading(true);
-    const url = await uploadFile(file);
+    const url = await uploadFile(urlValue);
     if (url) {
       if (onUpdate) {
         onUpdate(url);
@@ -471,6 +460,8 @@ export const EditableImage: React.FC<{
       }
     }
     setIsUploading(false);
+    setShowUrlInput(false);
+    setUrlValue('');
   };
 
   if (!isEditMode) {
@@ -478,29 +469,45 @@ export const EditableImage: React.FC<{
   }
 
   return (
-    <div 
-      className={`relative group cursor-pointer overflow-hidden rounded-lg outline outline-2 outline-dashed outline-blue-400/70 hover:outline-blue-500 transition-all ${className}`}
-      onClick={() => fileInputRef.current?.click()}
-      style={aspectRatio ? { aspectRatio } : {}}
-    >
-      <img src={currentSrc} alt={alt} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-blue-500/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
-        {isUploading ? (
-          <Loader2 className="animate-spin mb-2" size={32} />
-        ) : (
-          <>
-            <Upload size={32} className="mb-2" />
-            <span className="text-xs font-bold uppercase tracking-widest">Replace Image</span>
-          </>
-        )}
+    <>
+      <div 
+        className={`relative group cursor-pointer overflow-hidden rounded-lg outline outline-2 outline-dashed outline-blue-400/70 hover:outline-blue-500 transition-all ${className}`}
+        onClick={() => setShowUrlInput(true)}
+        style={aspectRatio ? { aspectRatio } : {}}
+      >
+        <img src={currentSrc} alt={alt} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-blue-500/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
+          {isUploading ? (
+            <Loader2 className="animate-spin mb-2" size={32} />
+          ) : (
+            <>
+              <Upload size={32} className="mb-2" />
+              <span className="text-xs font-bold uppercase tracking-widest">Replace Image</span>
+            </>
+          )}
+        </div>
       </div>
-      <input 
-        type="file" 
-        ref={fileInputRef} 
-        onChange={handleFileChange} 
-        className="hidden" 
-        accept="image/*"
-      />
-    </div>
+      {showUrlInput && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setShowUrlInput(false)}>
+          <div className="bg-[#111] border border-white/10 rounded-2xl p-6 w-full max-w-md space-y-4" onClick={e => e.stopPropagation()}>
+            <h3 className="text-white font-bold text-lg">Paste Image URL</h3>
+            <p className="text-muted-foreground text-sm">Paste a direct link to an image (from imgbb, Imgur, etc.)</p>
+            <input
+              type="url"
+              value={urlValue}
+              onChange={e => setUrlValue(e.target.value)}
+              placeholder="https://i.ibb.co/..."
+              className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-primary"
+              autoFocus
+              onKeyDown={e => e.key === 'Enter' && handleUrlSubmit()}
+            />
+            <div className="flex gap-3">
+              <button onClick={() => { setShowUrlInput(false); setUrlValue(''); }} className="flex-1 py-2 rounded-xl border border-white/10 text-muted-foreground hover:text-white transition-colors text-sm">Cancel</button>
+              <button onClick={handleUrlSubmit} className="flex-1 py-2 rounded-xl bg-primary text-white font-bold text-sm hover:opacity-90 transition-opacity">Apply</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

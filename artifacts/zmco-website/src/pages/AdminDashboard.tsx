@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { useAdmin } from '@/context/AdminContext';
-import { Settings, Layout, Briefcase, Type, Palette, Bot, Save, Trash2, Plus, Monitor, LogOut, FileText, ShieldCheck, Edit2, X, Check, Loader2, Upload, Moon, Sun, ArrowUpToLine, Wrench, Eraser } from 'lucide-react';
+import { Settings, Layout, Briefcase, Type, Palette, Bot, Save, Trash2, Plus, Monitor, LogOut, FileText, ShieldCheck, Edit2, X, Check, Loader2, Moon, Sun, ArrowUpToLine, Wrench, Eraser } from 'lucide-react';
 import PageTransition from '@/components/PageTransition';
 import * as Icons from 'lucide-react';
 import { type MachineryItem, loadMachinery } from '@/pages/Machinery';
@@ -613,19 +613,23 @@ function ProjectForm({ initial, onSave, onCancel, saving, allServices }: { initi
   const [form, setForm] = useState<Project>(initial || blank);
   const { uploadFile } = useAdmin();
   const [uploading, setUploading] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [galleryUrl, setGalleryUrl] = useState('');
 
   const set = (k: keyof Project) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => setForm(f => ({ ...f, [k]: e.target.value }));
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'image' | 'gallery') => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleImageUrl = async (field: 'image' | 'gallery') => {
+    const url = field === 'image' ? imageUrl : galleryUrl;
+    if (!url.trim()) return;
     setUploading(field);
-    const url = await uploadFile(file);
-    if (url) {
-      if (field === 'image') setForm(f => ({ ...f, image: url }));
-      else setForm(f => ({ ...f, gallery: [...(f.gallery || []), url] }));
+    const result = await uploadFile(url);
+    if (result) {
+      if (field === 'image') setForm(f => ({ ...f, image: result }));
+      else setForm(f => ({ ...f, gallery: [...(f.gallery || []), result] }));
     }
     setUploading(null);
+    if (field === 'image') setImageUrl('');
+    else setGalleryUrl('');
   };
 
   const removeGalleryImg = (idx: number) => {
@@ -694,18 +698,30 @@ function ProjectForm({ initial, onSave, onCancel, saving, allServices }: { initi
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Cover Image</label>
+            <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Cover Image URL</label>
             <div className="flex items-center gap-4">
               {form.image && (
                 <div className="w-20 h-20 rounded-lg overflow-hidden border border-white/10 shrink-0">
                   <img src={form.image} className="w-full h-full object-cover" />
                 </div>
               )}
-              <label className="flex-1 cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl py-6 hover:border-primary/50 transition-colors">
-                {uploading === 'image' ? <Loader2 className="animate-spin text-primary" size={24} /> : <Upload size={24} className="text-muted-foreground mb-2" />}
-                <span className="text-xs text-muted-foreground">Upload Cover</span>
-                <input type="file" onChange={e => handleImageUpload(e, 'image')} className="hidden" accept="image/*" />
-              </label>
+              <div className="flex-1 flex gap-2">
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={e => setImageUrl(e.target.value)}
+                  placeholder="Paste image URL (imgbb, imgur...)"
+                  className="flex-1 bg-accent border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:border-primary"
+                  onKeyDown={e => e.key === 'Enter' && handleImageUrl('image')}
+                />
+                <button
+                  onClick={() => handleImageUrl('image')}
+                  disabled={uploading === 'image' || !imageUrl.trim()}
+                  className="px-4 py-3 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+                >
+                  {uploading === 'image' ? '...' : 'Add'}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -718,10 +734,23 @@ function ProjectForm({ initial, onSave, onCancel, saving, allServices }: { initi
                   <button onClick={() => removeGalleryImg(i)} className="absolute inset-0 bg-red-500/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"><Trash2 size={16} /></button>
                 </div>
               ))}
-              <label className="aspect-square cursor-pointer flex items-center justify-center border-2 border-dashed border-white/10 rounded-lg hover:border-primary/50 transition-colors">
-                {uploading === 'gallery' ? <Loader2 className="animate-spin text-primary" size={16} /> : <Plus size={16} className="text-muted-foreground" />}
-                <input type="file" onChange={e => handleImageUpload(e, 'gallery')} className="hidden" accept="image/*" />
-              </label>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                value={galleryUrl}
+                onChange={e => setGalleryUrl(e.target.value)}
+                placeholder="Paste image URL"
+                className="flex-1 bg-accent border border-border rounded-xl px-4 py-3 text-sm text-foreground outline-none focus:border-primary"
+                onKeyDown={e => e.key === 'Enter' && handleImageUrl('gallery')}
+              />
+              <button
+                onClick={() => handleImageUrl('gallery')}
+                disabled={uploading === 'gallery' || !galleryUrl.trim()}
+                className="px-4 py-3 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {uploading === 'gallery' ? '...' : 'Add'}
+              </button>
             </div>
           </div>
 
@@ -939,16 +968,15 @@ function MachineryForm({
   const [form, setForm] = React.useState<MachineryItem>(initial || blank);
   const { uploadFile } = useAdmin();
   const [uploading, setUploading] = React.useState(false);
+  const [imageUrl, setImageUrl] = React.useState('');
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleImageUrl = async () => {
+    if (!imageUrl.trim()) return;
     setUploading(true);
-    const url = await uploadFile(file);
+    const url = await uploadFile(imageUrl);
     if (url) setForm(f => ({ ...f, images: [...f.images, url] }));
     setUploading(false);
-    // Reset input so the same file can be uploaded again if needed
-    e.target.value = '';
+    setImageUrl('');
   };
 
   const removeImage = (idx: number) => {
@@ -1043,18 +1071,24 @@ function MachineryForm({
           </div>
         )}
 
-        {/* Upload button */}
-        <label className="flex items-center gap-3 cursor-pointer border-2 border-dashed border-white/10 rounded-xl py-4 px-4 hover:border-primary/50 transition-colors group">
-          {uploading ? (
-            <Loader2 className="animate-spin text-primary" size={20} />
-          ) : (
-            <Upload size={20} className="text-muted-foreground group-hover:text-primary transition-colors" />
-          )}
-          <span className="text-sm text-muted-foreground group-hover:text-white transition-colors">
-            {uploading ? 'Uploading…' : 'Click to upload image'}
-          </span>
-          <input type="file" onChange={handleImageUpload} className="hidden" accept="image/*" disabled={uploading} />
-        </label>
+        {/* URL input */}
+        <div className="flex gap-2">
+          <input
+            type="url"
+            value={imageUrl}
+            onChange={e => setImageUrl(e.target.value)}
+            placeholder="Paste image URL (imgbb, imgur...)"
+            className="flex-1 bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-primary"
+            onKeyDown={e => e.key === 'Enter' && handleImageUrl()}
+          />
+          <button
+            onClick={handleImageUrl}
+            disabled={uploading || !imageUrl.trim()}
+            className="px-4 py-3 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {uploading ? '...' : 'Add'}
+          </button>
+        </div>
         <p className="text-[11px] text-muted-foreground">First image is the cover. Use ← → arrows to reorder.</p>
       </div>
 
