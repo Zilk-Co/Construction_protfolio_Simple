@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: construction-portfolio-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd lib/db && pnpm install && cd ../../artifacts/api-server && pnpm install && pnpm run build
+    startCommand: cd artifacts/api-server && pnpm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: DATABASE_URL
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+    healthCheckPath: /api/healthz
+    autoDeploy: true
