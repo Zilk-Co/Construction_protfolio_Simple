@@ -334,10 +334,10 @@ async function main() {
 - Satisfaction Rating: 100% client satisfaction with zero safety incidents.
 
 [CONTACT DETAILS]
-- Corporate Phone: 0315 2185221
-- Corporate Email: zmco2025@gmail.com
+- Corporate Phone: +92 123456789
+- Corporate Email: zmc@gmail.com
 - Operational Hours: Monday to Saturday, 9:00 AM to 6:00 PM.
-- Quotes: Estimates are processed within 24 to 48 hours. Clients can request a quote by emailing details to zmco2025@gmail.com or calling 0315 2185221.
+- Quotes: Estimates are processed within 24 to 48 hours. Clients can request a quote by emailing details to zmc@gmail.com or calling +92 123456789.
 
 [CORE SERVICES & CAPABILITIES]
 1. Construction & Contracting:

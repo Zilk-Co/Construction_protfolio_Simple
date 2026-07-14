@@ -28,14 +28,14 @@ router.post("/contact", async (req: Request, res: Response) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'zmco2025@gmail.com',
+        user: 'zmc@gmail.com',
         pass: process.env.SMTP_PASSWORD || '', 
       }
     });
 
     const mailOptions = {
-      from: 'zmco2025@gmail.com',
-      to: 'zmco2025@gmail.com', // Sending to yourself
+      from: 'zmc@gmail.com',
+      to: 'zmc@gmail.com', // Sending to yourself
       replyTo: email, // The user's email so you can reply to them
       subject: `New Contact Form Submission: ${subject}`,
       text: `You have received a new message from your website contact form.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`
@@ -47,7 +47,7 @@ router.post("/contact", async (req: Request, res: Response) => {
         console.log(`New contact message from ${name} (${email}): ${subject}\n${message}`);
       } else {
         await transporter.sendMail(mailOptions);
-        console.log(`Email successfully sent to zmco2025@gmail.com`);
+        console.log(`Email successfully sent to zmc@gmail.com`);
       }
     } catch (emailError) {
       console.error("Error sending email:", emailError);

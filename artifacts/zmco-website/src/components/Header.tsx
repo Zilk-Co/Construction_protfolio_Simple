@@ -271,10 +271,10 @@ export default function Header() {
             >
               <p className="text-[9px] uppercase tracking-[0.35em] text-white/25 mb-3 font-bold">Contact</p>
               <a href="tel:03152185221" className="block text-lg font-semibold mb-1 hover:text-primary transition-colors">
-                0315 2185221
+                +92 123456789
               </a>
-              <a href="mailto:zmco2025@gmail.com" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                zmco2025@gmail.com
+              <a href="mailto:zmc@gmail.com" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                zmc@gmail.com
               </a>
             </motion.div>
           </motion.div>

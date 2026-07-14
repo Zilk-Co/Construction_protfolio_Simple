@@ -18,8 +18,8 @@ const SITE_KNOWLEDGE = {
     founded: "2013",
     experience: "12 years",
     location: "Pakistan",
-    phone: "0315 2185221",
-    email: "zmco2025@gmail.com",
+    phone: "+92 123456789",
+    email: "zmc@gmail.com",
     tagline: "Building the Future of Pakistan",
     description: "A premier engineering, construction, and project management firm delivering excellence across Pakistan.",
   },
@@ -104,7 +104,7 @@ const SITE_KNOWLEDGE = {
   faqs: [
     {
       q: "How can I get a quote?",
-      a: "Contact us at 0315 2185221 or email zmco2025@gmail.com with your project details. Our estimating team will provide a detailed proposal within 48 hours.",
+      a: "Contact us at +92 123456789 or email zmc@gmail.com with your project details. Our estimating team will provide a detailed proposal within 48 hours.",
     },
     {
       q: "Do you work outside Pakistan?",

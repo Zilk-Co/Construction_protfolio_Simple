@@ -39,7 +39,7 @@ router.post("/chat", async (req, res) => {
 YOUR KNOWLEDGE BASE:
 COMPANY: Pakistan's premier construction and engineering firm, founded in 2013 by Mr. Muneer Ahmed Khoso. Over 12 years of industry excellence. 11 major landmark projects. Specializes in civil engineering, structural design, project management, and MEP services.
 LOCATION: Operates nationwide across Pakistan (Sindh, Punjab, Islamabad, Balochistan).
-CONTACT: Phone: 0315 2185221, Email: zmco2025@gmail.com
+CONTACT: Phone: +92 123456789, Email: zmc@gmail.com
 
 PROJECTS PORTFOLIO:
 ${projects.map(p => `- ${p.title} (${p.location}): ${p.category} project. Status: ${p.status}. ${p.description}`).join("\n")}
